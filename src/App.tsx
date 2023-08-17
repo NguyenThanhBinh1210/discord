@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import banner from '../src/assets/banner.svg';
 import logo from '../src/assets/logo.svg';
@@ -65,7 +65,7 @@ function App() {
               />
             </div>
             <a href='#'>Forgot your password?</a>
-            <button style={{cursor: "pointer"}} type='submit'>Log In</button>
+            <button style={{ cursor: "pointer" }} type='submit'>Log In</button>
             <div>
               <span>Need an account?</span>
               <span>Register</span>
