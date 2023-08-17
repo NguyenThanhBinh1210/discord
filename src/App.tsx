@@ -7,7 +7,7 @@ function App() {
   const [emailOrPhone, setEmailOrPhone] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
     try {
