@@ -1,5 +1,4 @@
 import './App.css'
-// import Card from './components/Card'
 import banner from '../src/assets/banner.svg'
 import logo from '../src/assets/logo.svg'
 
