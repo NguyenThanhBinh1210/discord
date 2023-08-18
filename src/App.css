@@ -81,6 +81,16 @@ body {
   height: 38px;
 }
 
+.input-wrap input:focus:not(:last-child) {
+  border: solid red 0.0001px;
+}
+
+.input-wrap p.active {
+  color: red;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
 .form-main div a {
   text-decoration: none;
   color: #0692e5;

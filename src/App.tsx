@@ -7,7 +7,7 @@ function App() {
   const [emailOrPhone, setEmailOrPhone] = useState('');
   const [password, setPassword] = useState('');
   const [loginAttempts, setLoginAttempts] = useState(0);
-
+  const [isFocus, setFocus] = useState(false)
   const handleLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
@@ -60,13 +60,14 @@ function App() {
                 Email hoặc số điện thoại <span>*</span>
               </label>
               <input
-                style={{border: 'solid red 0.0001px'}}
                 type='text'
                 id='username'
+                onFocus={() => setFocus(true)}
+                onBlur={() => setFocus(false)}
                 value={emailOrPhone}
                 onChange={(e) => setEmailOrPhone(e.target.value)}
               />
-              <p style={{fontSize: '12px', color: 'red'}}>Phát hiện đăng nhập ở địa điểm mới, hãy kiểm tra email của bạn.</p>
+              <p style={{ fontSize: '12px', height: "0", opacity: 0, visibility: 'hidden' }} className={`${isFocus && "active"}`}>Phát hiện đăng nhập ở địa điểm mới, hãy kiểm tra email của bạn.</p>
             </div>
             <div className='input-wrap'>
               <label htmlFor='password'>
