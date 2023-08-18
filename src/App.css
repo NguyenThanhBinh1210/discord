@@ -81,7 +81,7 @@ body {
   height: 38px;
 }
 
-.input-wrap input:focus:not(:last-child) {
+/* .input-wrap input:focus:not(:last-child) {
   border: solid red 0.0001px;
 }
 
@@ -89,7 +89,7 @@ body {
   color: red;
   opacity: 1 !important;
   visibility: visible !important;
-}
+} */
 
 .form-main div a {
   text-decoration: none;

