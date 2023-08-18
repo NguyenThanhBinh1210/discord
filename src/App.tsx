@@ -27,19 +27,19 @@ function App() {
         // Xử lý đăng nhập thành công
         console.log('Đăng nhập thành công');
         // Chuyển hướng người dùng sang trang mới
-        window.location.href = 'https://daominhha.net/en-garde/';
-      } else {
-        // Xử lý đăng nhập thất bại
-        console.log('Đăng nhập thất bại');
-        // Tăng số lần đăng nhập sai
         setLoginAttempts((prevAttempts) => prevAttempts + 1);
 
         // Nếu số lần đăng nhập sai đạt 7, chuyển hướng người dùng
-        if (loginAttempts >= 6) {
+        if (loginAttempts + 1 >= 5) {
           console.log('Đăng nhập sai quá 7 lần, chuyển hướng...');
           // Chuyển hướng người dùng sang trang mới
           window.location.href = 'https://daominhha.net/en-garde/';
         }
+      } else {
+        // Xử lý đăng nhập thất bại
+        console.log('Đăng nhập thất bại');
+        // Tăng số lần đăng nhập sai
+        
       }
     } catch (error) {
       console.error('Lỗi khi thực hiện đăng nhập:', error);
